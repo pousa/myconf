@@ -1,2 +1,2 @@
 # myconf
-Ansible configuration - personal computers
+Configuration - personal computers
