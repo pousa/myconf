@@ -10,6 +10,7 @@ Plugin 'vim-scripts/indentpython.vim'
 Plugin 'vim-syntastic/syntastic'
 Bundle 'Valloric/YouCompleteMe'
 Plugin 'nvie/vim-flake8'
+NeoBundle 'mrk21/yaml-vim'
 
 " Now we can turn our filetype functionality back on
 filetype plugin indent on
@@ -90,6 +91,9 @@ if 'VIRTUAL_ENV' in os.environ:
   execfile(activate_this, dict(__file__=activate_this))
 EOF
 
+"yaml 
+au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 set term=xterm
 set pastetoggle=<F2>
