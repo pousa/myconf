@@ -8,9 +8,9 @@ Plugin 'fatih/vim-go'
 Plugin 'Solarized'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'vim-syntastic/syntastic'
-Bundle 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'nvie/vim-flake8'
-NeoBundle 'mrk21/yaml-vim'
+Plugin 'mrk21/yaml-vim'
 
 " Now we can turn our filetype functionality back on
 filetype plugin indent on
