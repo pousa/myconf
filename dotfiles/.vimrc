@@ -69,6 +69,8 @@ au BufRead,BufNewFile *.c,*.h let b:comment_leader = '/* '
 
 "Python
 let python_highlight_all=1
+let g:flake8_show_in_file=1  " show
+autocmd BufWritePost *.py call Flake8()
 au BufRead,BufNewFile *.py,*.pyw set expandtab
 au BufRead,BufNewFile *.py,*.pyw set textwidth=139
 au BufRead,BufNewFile *.py,*.pyw set tabstop=4
