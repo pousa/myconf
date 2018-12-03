@@ -1,7 +1,7 @@
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+call vundle#begin()
 
 Plugin 'gmarik/vundle'
 Plugin 'fatih/vim-go'
@@ -12,10 +12,11 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'nvie/vim-flake8'
 Plugin 'mrk21/yaml-vim'
 
+call vundle#end()
 " Now we can turn our filetype functionality back on
 filetype plugin indent on
 
-syntax on
+set clipboard=unnamed   "access system clipboard
 set nobackup            " do not keep a backfup file
 set ruler               " show the cursor position all the time
 set laststatus=2        " always show the statusline
@@ -42,11 +43,13 @@ set statusline+=%c,     "cursor column
 set statusline+=%l/%L   "cursor line/total lines
 set statusline+=\ %P    "percent through file
 
+syntax on
 set t_Co=16
 set background=dark
 colorscheme solarized
 highlight BadWhitespace ctermbg=red guibg=red
 
+"Go
 let g:go_highlight_functions = 1 
 let g:go_highlight_methods = 1 
 let g:go_highlight_fields = 1 
@@ -82,9 +85,20 @@ au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /\s\+$/
 au         BufNewFile *.py,*.pyw set fileformat=unix
 au BufRead,BufNewFile *.py,*.pyw let b:comment_leader = '#'
 
-
-"python with virtualenv support
+" Add the virtualenv's site-packages to vim path
+if has('python3')
 py3 << EOF
+import os, sys, pathlib
+if 'VIRTUAL_ENV' in os.environ:
+    venv = os.getenv('VIRTUAL_ENV')
+    site_packages = next(pathlib.Path(venv, 'lib').glob('python*/site-packages'), None)
+    if site_packages:
+        sys.path.insert(0, str(site_packages))
+EOF
+endif 
+
+if has('python')
+py << EOF
 import os
 import sys
 if 'VIRTUAL_ENV' in os.environ:
@@ -92,8 +106,10 @@ if 'VIRTUAL_ENV' in os.environ:
   activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
   execfile(activate_this, dict(__file__=activate_this))
 EOF
+endif
 
 "yaml 
+syntax on
 au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
